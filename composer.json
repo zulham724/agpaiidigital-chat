@@ -8,7 +8,7 @@
         "php": "^7.3|^8.0",
         "firebase/php-jwt": "^5.2",
         "laravel/lumen-framework": "^8.0",
-        "lcobucci/jwt": "^4.1",
+        "lcobucci/jwt": "4.1.1",
         "okta/jwt-verifier": "^1.0"
     },
     "require-dev": {
