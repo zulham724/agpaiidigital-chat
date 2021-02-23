@@ -25,5 +25,9 @@ $router->post('/chat', ['middleware' => 'auth', function () use ($router) {
     return app('db')->connection('mysql')->insert('insert into chats(`sender_id`,`conversation_id`, `value`, created_at, updated_at) values (?,?,?,?,?)', [$sender_id, $conversation_id,$value,$now,$now]);
 }]);
 $router->post('/getlatestchat', 'ChatController@getLatestChat');
+$router->get('/getunreadcount', 'ChatController@getUnreadCount');
+$router->post('/conversations', 'ChatController@getMyConversations');
+$router->put('/readconversation/{id}','ChatController@readConversation');
 // $router->get('/')
-
+$router->get('/getunreadconversationbymessages','ChatController@getUnreadConversationCountByMessage');
+// $router->
