@@ -116,4 +116,13 @@ class ChatController extends Controller
         }
         else return response('chats sudah terbaca semua!! tidak ada yang diupdate',500);
     }
+    public function removeChats(Request $request){
+        $user_id = app('decoded_array')['sub'];
+        $chat_ids = $request->chat_ids?$request->chat_ids:[];
+        // return $user_id;
+        $con =  app('db')->connection('mysql');
+        $con->table('chats')->where('sender_id',$user_id)->whereIn('id',$chat_ids)->delete();
+        $check = $con->table('chats')->where('sender_id',$user_id)->whereIn('id',$chat_ids)->get();
+        return $check;
+    }
 }

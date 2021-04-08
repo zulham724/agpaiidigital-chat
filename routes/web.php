@@ -22,7 +22,9 @@ $router->post('/chat', ['middleware' => 'auth', function () use ($router) {
     $conversation_id = app('request')->input('conversation_id');
     $value = app('request')->input('value');
     $sender_id = $router->app['decoded_array']['sub'];
-    return app('db')->connection('mysql')->insert('insert into chats(`sender_id`,`conversation_id`, `value`, created_at, updated_at) values (?,?,?,?,?)', [$sender_id, $conversation_id,$value,$now,$now]);
+    $id =  app('db')->connection('mysql')->table('chats')
+    ->insertGetId(['sender_id'=>$sender_id, 'conversation_id'=>$conversation_id, 'value'=>$value,'created_at'=>$now,'updated_at'=>$now]); //->insert('insert into chats(`sender_id`,`conversation_id`, `value`, created_at, updated_at) values (?,?,?,?,?)', [$sender_id, $conversation_id,$value,$now,$now]);
+    return $id;
 }]);
 $router->post('/getlatestchat', 'ChatController@getLatestChat');
 $router->get('/getunreadcount', 'ChatController@getUnreadCount');
@@ -30,4 +32,4 @@ $router->post('/conversations', 'ChatController@getMyConversations');
 $router->put('/readconversation/{id}','ChatController@readConversation');
 // $router->get('/')
 $router->get('/getunreadconversationbymessages','ChatController@getUnreadConversationCountByMessage');
-// $router->
+$router->post('/removechats','ChatController@removeChats');
